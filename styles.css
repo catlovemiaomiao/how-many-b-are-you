@@ -217,6 +217,8 @@ a { color: #5f52bc; }
 .result-percent { margin: 20px 0 0; color: #675c75; font-size: .89rem; line-height: 1.7; }
 .result-percent strong { color: #5f479c; }
 .result-buttons { display: flex; flex-wrap: wrap; gap: 11px; margin: 25px 0 9px; }
+.share-link-fallback { margin: 13px 0; padding: 15px 17px; border: 1.5px dashed #b9a8de; border-radius: 16px; background: #f7f1ff; color: #625676; font-size: .85rem; line-height: 1.7; }
+.share-link-fallback a { display: block; margin-top: 5px; font-weight: 800; overflow-wrap: anywhere; }
 .review-list { display: grid; gap: 9px; }
 .review-item { border: 1.5px solid #e6dfed; border-radius: 17px; background: #fff; overflow: hidden; }
 .review-item summary { display: flex; align-items: center; gap: 11px; padding: 14px 16px; cursor: pointer; list-style: none; font-size: .88rem; font-weight: 800; line-height: 1.45; }

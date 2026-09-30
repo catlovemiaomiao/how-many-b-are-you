@@ -278,16 +278,19 @@
       <details class="score-detail"><summary>看看六个 B 档位怎么划分 ▾</summary>${tierTableHTML()}</details>
       <div class="result-disclaimer"><span aria-hidden="true">✎</span><div><strong>这张卡说的 B 是娱乐称号。</strong>它按本轮正确率落档，题型参考公开 benchmark；没有让对应大小的模型做这些题，因此不能解读为“你的大脑相当于某 B 模型”。也不是智商或心理测量结果。</div></div>
       <div class="result-buttons"><button class="primary-button" id="poster-button" type="button">做一张可爱结果海报 ✦</button><button class="secondary-button" id="copy-link-button" type="button">复制测试网址</button><button class="secondary-button" id="replay-button" type="button">再来一局</button><button class="quiet-button" id="home-button" type="button">回首页</button></div>
+      <div class="share-link-fallback" id="share-link-fallback" hidden>长按复制这条网址，发给朋友来答题：<a href="${esc(new URL(".", location.href).href)}">${esc(new URL(".", location.href).href)}</a></div>
       <section class="result-section" aria-labelledby="review-title"><h2 id="review-title">翻翻这局的题</h2><p class="section-note">点开能看你的选择、标准答案和解释。监考团交卷后才公布答案。</p><div class="review-list">${reviewHTML(result)}</div></section>
     </section>`;
     document.getElementById("poster-button").addEventListener("click", () => makePoster(result, score, tier));
     document.getElementById("copy-link-button").addEventListener("click", async (event) => {
+      const button = event.currentTarget;
       const url = new URL(".", location.href).href;
       try {
         await navigator.clipboard.writeText(url);
-        event.currentTarget.textContent = "网址已复制 ✓";
+        button.textContent = "网址已复制 ✓";
       } catch (_) {
-        window.prompt("复制这条网址，发给朋友来答题：", url);
+        document.getElementById("share-link-fallback").hidden = false;
+        button.textContent = "下方可长按复制";
       }
     });
     document.getElementById("replay-button").addEventListener("click", () => { selectedMode = result.mode; selectedPack = result.pack; renderHome(true); });
@@ -391,7 +394,7 @@
         if (navigator.canShare({ files: [file] })) {
           share.hidden = false;
           share.addEventListener("click", async () => {
-            try { await navigator.share({ files: [file], title: "今天几 B？" }); } catch (_) { /* User may cancel. */ }
+            try { await navigator.share({ files: [file], title: "今天几 B？", text: "来让呆萌监考团测测你今天几 B！", url: new URL(".", location.href).href }); } catch (_) { /* User may cancel. */ }
           });
         }
       }).catch(() => {});
